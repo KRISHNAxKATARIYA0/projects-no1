@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #222;
+      transition: background 0.5s, color 0.5s;
+    }
+    header {
+      background: #203a43;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .toggle-btn {
+      background: white;
+      border: none;
+      border-radius: 20px;
+      padding: 5px 15px;
+      cursor: pointer;
+      color: #203a43;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .dark-mode {
+      background: #121212;
+      color: #ddd;
+    }
+    .dark-mode .card {
+      background: #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>Welcome, <span id="username">User</span></div>
+    <button class="toggle-btn" onclick="toggleMode()">Toggle Dark Mode</button>
+  </header>
+
+  <div class="content" id="dataSection">
+    <div class="card">Assignment: AI Report Submission – Due: 20th July</div>
+    <div class="card">Attendance: 92%</div>
+    <div class="card">Message: Welcome to CyberSec Batch 2025</div>
+  </div>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Simulate getting email from URL or storage
+    const username = localStorage.getItem("userEmail") || "Student";
+    document.getElementById("username").innerText = username.split("@")[0];
+  </script>
+</body>
+</html>

